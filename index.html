@@ -1,74 +1,91 @@
-    <html>  
-    <head>  
-    <title>Creating your first app with Flickr API</title>  
-    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  
-    <style type="text/css">  
-    #sq,#lg-sq,#thumb,#small,#mid,#ori {  
-    width: 100%  
-    }  
-    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">  
-    </style>  
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>  
-    <script>  
-    var apiurl,myresult,apiurl_size,selected_size;  
-    apiurl = "https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&gallery_id=72157679773554794&api_key=0c5d918b8ac84cb5c74f0785d71232ec&per_page=10&format=json&nojsoncallback=1";  
-    //var requestURL = 'https://api.flickr.com/services/rest/?&method=flickr.galleries.getPhotos&gallery_id=72157679773554794&api_key=0c5d918b8ac84cb5c74f0785d71232ec&user_id=149876655@N08&format=json&per_page=50'
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>John's Startpage</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/js-geolocation.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script>
+            var default_tag = "skyline";
+            function getPicture(cb) {
+                var apiKey = "0c5d918b8ac84cb5c74f0785d71232ec";
 
- 	function getPicture(cb) {
-    var apiKey = "0c5d918b8ac84cb5c74f0785d71232ec"; // replace this with your API key
-
-    // get an array of random photos
-    $.getJSON('https://api.flickr.com/services/rest/?method=flickr.galleries.getPhotos&gallery_id=72157679773554794&api_key=0c5d918b8ac84cb5c74f0785d71232ec&per_page=100&format=json&nojsoncallback=1',
-        function(data) {
-
-            // if everything went good
-            if (data.stat == 'ok') {
-                // get a random id from the array
-                var photo = data.photos.photo[Math.floor(Math.random() * data.photos.photo.length)];
-
-                // now call the flickr API and get the picture with a nice size
-                $.getJSON(
-                    "https://api.flickr.com/services/rest/?jsoncallback=?", {
-                        method: 'flickr.photos.getSizes',
+                // get an array of random photos
+                $.getJSON('https://api.flickr.com/services/rest/?jsoncallback=?', {
+                        method: 'flickr.photos.search',
                         api_key: apiKey,
-                        photo_id: photo.id,
+                        tags: default_tag,
+                        safe_search: 1,
+                        content_type: 1,
                         format: 'json',
                         nojsoncallback: 1
                     },
-                    function(response) {
-                        if (response.stat == 'ok') {
-                            var the_url = response.sizes.size[5].source;
-                            cb(the_url);
+                    function (data) {
+                        // if everything went well
+                        if (data.stat == 'ok') {
+                            // get a random photo from the array
+                            var photo = data.photos.photo[Math.floor(Math.random() * data.photos.photo.length)];
+                            console.log("Everything worked");
+                            var url ='https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'_h.jpg';
+                            console.log(url);
+                            $('body').css('background-image: ' + url);
+                            cb(url);
+
                         } else {
-                            console.log(" The request to get the picture was not good :\ ")
+                            console.log(" The request to get the array was not good :( ");
                         }
                     }
                 );
-
-            } else {
-                console.log(" The request to get the array was not good :( ");
             }
-        }
-    );
-};
+            $("document").ready(function () {
+                getPicture(function(url) {
+                    $('body').css('background-image', 'url('+url+')');
+                });
 
-getPicture(function(url) {
-	$('body').css('background-image', 'url('+url+')');
-});
-    </script>  
-    </head>  
-    <body>  
-    <style type="text/css">
-    	body{
-    		background-image: no-repeat center/cover fixed;
-    	}
-    </style>
-    <div class="container">  
-    <div class="row">  
-    <div class="col-md-12">  
-	<img id="random"></img>
-    </div>  
-    </div>  
-    </div>  
-    </body>  
-    </html>  
+            });
+            </script>
+    </head>
+    <body>
+    <div class="container-fluid">
+        <div class="col-lg-3 col-md-3">
+            <div class="changeBackground">
+                <form>
+                <input id="user_input" type="text" placeholder="(optional) new bg theme"><input type="button" value="change" onclick="newBackground();">
+                </form>
+                <script>
+                    function newBackground() {
+                        var input = document.getElementById("user_input").value;
+                        default_tag = input;
+                        getPicture(function (url) {
+                            $('body').css('background-image', 'url('+url+')');
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+
+        </div>
+        <div class="col-lg-3 col-md-3">
+            <div class="time">
+            <p>TIME GOES HERE</p>
+            </div>
+            <div class="date">
+            <p>DATE GOES HERE</p>
+            </div>
+            <div id="weather">
+                <p class="location"></p>
+                <p class="temperature"></p>
+                <div class="climate_bg"></div>
+                <p class="humidity"></p>
+                <p class="windspeed"></p>
+            </p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="js/weather.js"></script>
+    </body>
+    </html>
