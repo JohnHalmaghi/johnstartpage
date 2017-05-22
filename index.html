@@ -6,18 +6,35 @@
         <title>John's Startpage</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="js/js-geolocation.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="js/mousetrap.min.js"></script>
         <script>
-            var default_tag = "skyline";
-            function getPicture(cb) {
-                var apiKey = "0c5d918b8ac84cb5c74f0785d71232ec";
+            Mousetrap.bind('m', function() { window.open("https://mail.google.com", "_self"); });
+            Mousetrap.bind('f', function() { window.open("https://facebook.com/", "_self"); });
+            Mousetrap.bind('g', function() { window.open("https://github.com", "_self"); });
+            Mousetrap.bind('r', function() { window.open("https://reddit.com/", "_self"); });
+            Mousetrap.bind('b', function() { window.open("https://blackboard.sdsu.edu/", "_self"); });
+            Mousetrap.bind('h', function() { window.open("https://news.ycombinator.com/", "_self"); });
+            Mousetrap.bind('y', function() { window.open("https://youtube.com/", "_self"); });
+            Mousetrap.bind('a', function() { window.open("https://amazon.com", "_self"); });
 
+
+        </script>
+        <script>
+            function getPicture(cb) {
+                if(document.cookie.split().length <= 0){ //if first time visiting site
+                    document.cookie = 'tag=wallpaper';
+                }
+                var tag = document.cookie.split('=')[1];
+                if(!navigator.cookieEnabled){ //if cookies are disabled
+                    tag='wallpaper';
+                }
+                var apiKey = "0c5d918b8ac84cb5c74f0785d71232ec";
                 // get an array of random photos
                 $.getJSON('https://api.flickr.com/services/rest/?jsoncallback=?', {
                         method: 'flickr.photos.search',
                         api_key: apiKey,
-                        tags: default_tag,
+                        tags: tag,
                         safe_search: 1,
                         content_type: 1,
                         format: 'json',
@@ -28,9 +45,7 @@
                         if (data.stat == 'ok') {
                             // get a random photo from the array
                             var photo = data.photos.photo[Math.floor(Math.random() * data.photos.photo.length)];
-                            console.log("Everything worked");
                             var url ='https://farm'+photo.farm+'.staticflickr.com/'+photo.server+'/'+photo.id+'_'+photo.secret+'_h.jpg';
-                            console.log(url);
                             $('body').css('background-image: ' + url);
                             cb(url);
 
@@ -54,38 +69,113 @@
             <div class="changeBackground">
                 <form>
                 <input id="user_input" type="text" placeholder="(optional) new bg theme"><input type="button" value="change" onclick="newBackground();">
+                    <input type="button" value="Stretch/Center Background" onclick="changeBGSize();">
                 </form>
                 <script>
                     function newBackground() {
                         var input = document.getElementById("user_input").value;
-                        default_tag = input;
+                        if(input != null && input != "" ){
+                            document.cookie = 'tag='+input;
+                        }
                         getPicture(function (url) {
                             $('body').css('background-image', 'url('+url+')');
                         });
                     }
                 </script>
+                <script>
+                    function changeBGSize() {
+                        if($('body').css('background-size') == 'cover'){
+                            $('body').css('background-size', 'auto');
+                        } else {
+                            $('body').css('background-size', 'cover');
+                        }
+
+                    }
+                </script>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-3 col-md-3 nopadding">
+            <div class="center">
+                <ul id="links-left">
+                    <li><a href="https://facebook.com/">Facebook</a> <span class="shortcuts"> (f)</span> </li>
+                    <li><a href="https://mail.google.com">Gmail</a><span class="shortcuts"> (m)</span></li>
+                    <li><a href="https://github.com">GitHub</a><span class="shortcuts"> (g)</span></li>
+                    <li><a href="https://youtube.com">YouTube</a><span class="shortcuts"> (y)</span></li>
 
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 nopadding">
+            <div class="center">
+                <ul id="links-right">
+                    <li><a href="https://reddit.com/">Reddit</a> <span class="shortcuts"> (r)</span> </li>
+                    <li><a href="https://blackboard.sdsu.edu/">Blackboard</a><span class="shortcuts"> (b)</span></li>
+                    <li><a href="https://news.ycombinator.com/">Hacker News</a><span class="shortcuts"> (h)</span></li>
+                    <li><a href="https://amazon.com">Amazon</a><span class="shortcuts"> (a)</span></li>
+                </ul>
+            </div>
         </div>
         <div class="col-lg-3 col-md-3">
-            <div class="time">
-            <p>TIME GOES HERE</p>
+            <div class="rightcol">
+                <script> //from https://isabelcastillo.com/display-current-date-javascript
+                    var now = new Date();
+                    var days = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+                    var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+                    var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
+                    function fourdigits(number) {
+                        return (number < 1000) ? number + 1900 : number;
+                    }
+                    today =  days[now.getDay()] + ", " +
+                        months[now.getMonth()] + " " +
+                        date + ", " +
+                        (fourdigits(now.getYear())) ;
+                    document.write(today);
+                </script>
             </div>
-            <div class="date">
-            <p>DATE GOES HERE</p>
+            <br> <!-- FIX THIS br NONSENSE !-->
+            <br>
+            <br>
+            <div class="rightcol">
+                <script>
+                    function checkTime(i) {
+                        if(i < 10){
+                            i = '0'+ i;
+                        }
+                        return i;
+                    }
+                    function checkHour(i) {
+                        if (i > 12){
+                            i = i -12;
+                        }
+                        return i;
+                    }
+                    var currentTime = new Date();
+                    var h = currentTime.getHours();
+                    var ampm = 'AM';
+                    if(h > 12){
+                        ampm = 'PM';
+                    }
+                    var m = currentTime.getMinutes();
+                    h = checkHour(h);
+                    m = checkTime(m);
+                    var time = h + ':'+ m + ' '+ ampm;
+                    document.write(time);
+                </script>
             </div>
-            <div id="weather">
+            <br>
+            <br>
+            <br>
+            <div id="rightcol">
                 <p class="location"></p>
                 <p class="temperature"></p>
                 <div class="climate_bg"></div>
                 <p class="humidity"></p>
                 <p class="windspeed"></p>
-            </p>
+            </div>
+        </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
-    <script src="js/weather.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
+        <script src="js/weather.js"></script>
+        <script src="js/mousetrap.min.js"></script>
     </body>
     </html>

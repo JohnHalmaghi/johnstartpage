@@ -1,6 +1,6 @@
 body{
 	background: black no-repeat fixed center center;
-	background-size: contain;
+	background-size: cover;
 }
 .container-fluid{
 }
@@ -10,15 +10,53 @@ body{
 	text-align: left;
 	color: black;
 }
-#weather {
+.rightcol {
 	float: right;
 	font-weight: bold;
-	color: white;
-	border-radius: 25px;
+	color: black;
+	border-radius: 10px;
 	font-size: x-large;
 	padding: 10px;
 	text-align: center;
 	text-transform: uppercase;
-	background-color: darkgrey;
-	opacity: .8;
+	background-color: rgba(255, 255, 255, .4);
+	}
+.center{
+	height: 100%;
+}
+.shortcuts{
+	float: right;
+	padding-right: 15px;
+}
+#links-left{
+	border: solid;
+	background-color: rgba(255, 255, 255, .4);
+	width: 70%;
+	float: right;
+	margin-top: 100%;
+}
+#links-right{
+	border: solid;
+	background-color: rgba(255, 255, 255, .4);
+	width: 70%;
+	float: left;
+	margin-top: 100%;
+}
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+li{
+}
+ul{
+	font-weight: bold;
+	font-size: x-large;
+	list-style-type: none;
+}
+a {
+	transition: all .15s;
+	text-decoration: none;
+	outline: none;
+	padding: 15px;
+	color: #111;
 }
