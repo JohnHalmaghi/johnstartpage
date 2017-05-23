@@ -21,11 +21,12 @@
         <script>
             function getPicture(cb) {
                 if(document.cookie.split().length <= 0){ //if first time visiting site
-                    document.cookie = 'tag=wallpaper';
+                    document.cookie = 'tag=wallpaper;expires=Fri, 31 Dec 9999 23:59:59 GMT"';
                 }
                 var tag = document.cookie.split('=')[1];
                 if(!navigator.cookieEnabled){ //if cookies are disabled
                     tag='wallpaper';
+                    alert("First!");
                 }
                 var apiKey = "0c5d918b8ac84cb5c74f0785d71232ec";
                 // get an array of random photos
@@ -66,14 +67,23 @@
         <div class="col-lg-3 col-md-3">
             <div class="changeBackground">
                 <form>
-                <input id="user_input" type="text" placeholder="(optional) new bg theme"><input type="button" value="change" onclick="newBackground();">
+                <input id="user_input" type="text" placeholder="(optional) new bg theme"><input type="button" id= "changeBG" value="change" onclick="newBackground();">
                     <input type="button" value="Stretch/Center Background" onclick="changeBGSize();">
                 </form>
+                <script>
+                    $(document).ready(function(){
+                        $('#user_input').keypress(function(e){
+                            if(e.keyCode==13)
+                                $('#changeBG').click();
+                        });
+                    });
+
+                </script>
                 <script>
                     function newBackground() {
                         var input = document.getElementById("user_input").value;
                         if(input != null && input != "" ){
-                            document.cookie = 'tag='+input;
+                            document.cookie = 'tag='+input+';expires=Fri, 31 Dec 9999 23:59:59 GMT"';
                         }
                         getPicture(function (url) {
                             $('body').css('background-image', 'url('+url+')');
