@@ -64,7 +64,7 @@
     </head>
     <body>
     <div class="container-fluid">
-        <div class="col-lg-3 col-md-3">
+        <div class="col-xs-3">
             <div class="changeBackground">
                 <form>
                 <input id="user_input" type="text" placeholder="(optional) new bg theme"><input type="button" id= "changeBG" value="change" onclick="newBackground();">
@@ -102,48 +102,29 @@
                 </script>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 nopadding">
+        <div class="col-xs-3 nopadding">
             <div class="center">
                 <ul id="links-left">
-                    <li><a href="https://facebook.com/">Facebook</a> <span class="shortcuts"> (f)</span> </li>
-                    <li><a href="https://mail.google.com">Gmail</a><span class="shortcuts"> (m)</span></li>
-                    <li><a href="https://github.com">GitHub</a><span class="shortcuts"> (g)</span></li>
-                    <li><a href="https://youtube.com">YouTube</a><span class="shortcuts"> (y)</span></li>
+                    <div class="row"> <li><a href="https://facebook.com/">Facebook</a> <span class="shortcuts"> (f)</span> </li> </div>
+                    <div class="row"><li><a href="https://mail.google.com">Gmail</a><span class="shortcuts"> (m)</span></li></div>
+                        <div class="row"><li><a href="https://github.com">GitHub</a><span class="shortcuts"> (g)</span></li></div>
+                            <div class="row"><li><a href="https://youtube.com">YouTube</a><span class="shortcuts"> (y)</span></li></div>
 
                 </ul>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 nopadding">
+        <div class="col-xs-3 nopadding">
             <div class="center">
                 <ul id="links-right">
-                    <li><a href="https://reddit.com/">Reddit</a> <span class="shortcuts"> (r)</span> </li>
-                    <li><a href="https://blackboard.sdsu.edu/">Blackboard</a><span class="shortcuts"> (b)</span></li>
-                    <li><a href="https://news.ycombinator.com/">Hacker News</a><span class="shortcuts"> (h)</span></li>
-                    <li><a href="https://amazon.com">Amazon</a><span class="shortcuts"> (a)</span></li>
+                    <div class="row"><li><a href="https://reddit.com/">Reddit</a> <span class="shortcuts"> (r)</span> </li></div>
+                    <div class="row"> <li><a href="https://blackboard.sdsu.edu/">Blackboard</a><span class="shortcuts"> (b)</span></li></div>
+                    <div class="row"> <li><a href="https://news.ycombinator.com/">Hacker News</a><span class="shortcuts"> (h)</span></li></div>
+                    <div class="row"> <li><a href="https://amazon.com">Amazon</a><span class="shortcuts"> (a)</span></li></div>
                 </ul>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3">
-            <div class="rightcol">
-                <script> //from https://isabelcastillo.com/display-current-date-javascript
-                    var now = new Date();
-                    var days = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-                    var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
-                    var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
-                    function fourdigits(number) {
-                        return (number < 1000) ? number + 1900 : number;
-                    }
-                    today =  days[now.getDay()] + ", " +
-                        months[now.getMonth()] + " " +
-                        date + ", " +
-                        (fourdigits(now.getYear())) ;
-                    document.write(today);
-                </script>
-            </div>
-            <br> <!-- FIX THIS br NONSENSE !-->
-            <br>
-            <br>
-            <div class="rightcol">
+        <div class="col-xs-3 nopadding">
+            <div class="rightcol pull-right">
                 <script>
                     function checkTime(i) {
                         if(i < 10){
@@ -170,10 +151,23 @@
                     document.write(time);
                 </script>
             </div>
-            <br>
-            <br>
-            <br>
-            <div class="rightcol">
+            <div class="rightcol pull-right">
+                <script> //from https://isabelcastillo.com/display-current-date-javascript
+                    var now = new Date();
+                    var days = new Array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+                    var months = new Array('January','February','March','April','May','June','July','August','September','October','November','December');
+                    var date = ((now.getDate()<10) ? "0" : "")+ now.getDate();
+                    function fourdigits(number) {
+                        return (number < 1000) ? number + 1900 : number;
+                    }
+                    today =  days[now.getDay()] + ", " +
+                        months[now.getMonth()] + " " +
+                        date + ", " +
+                        (fourdigits(now.getYear())) ;
+                    document.write(today);
+                </script>
+            </div>
+            <div class="rightcol pull-right">
                 <p class="location"></p>
                 <p class="temperature"></p>
                 <div class="climate_bg"></div>

@@ -11,12 +11,12 @@ body{
 	color: black;
 }
 .rightcol {
-	float: right;
+	margin: 1px;
 	font-weight: bold;
 	color: black;
 	border-radius: 10px;
-	font-size: x-large;
-	padding: 10px;
+	font-size: 1.5vw;
+	padding: 5px;
 	text-align: center;
 	text-transform: uppercase;
 	background-color: rgba(255, 255, 255, .4);
@@ -31,14 +31,14 @@ body{
 #links-left{
 	border: solid;
 	background-color: rgba(255, 255, 255, .4);
-	width: 70%;
+	width: 80%;
 	float: right;
 	margin-top: 100%;
 }
 #links-right{
 	border: solid;
 	background-color: rgba(255, 255, 255, .4);
-	width: 70%;
+	width: 80%;
 	float: left;
 	margin-top: 100%;
 }
@@ -50,7 +50,7 @@ li{
 }
 ul{
 	font-weight: bold;
-	font-size: x-large;
+	font-size: 1.5vw;
 	list-style-type: none;
 }
 a {
