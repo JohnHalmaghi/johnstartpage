@@ -1,4 +1,5 @@
-## To Do: ##
-* Add weather icon
-* increase mid col functionality
-* cleanup scripts in index.html
+## Startpage ##
+I made this browser landing page with the purpose of advancing my web development knowledge. Specifically I wanted to familiarize myself with APIs, JSON and Javascript. It is published [here] (https://johnhalmaghi.github.io/johnstartpage/).
+At the bottom left there is a text input box which when submitted will retrieve a random picture from flickr using the input text as a search criteria (using flickr tags) and sets it as the webpage background. The resulting image is not guaranteed to be of any particular resolution so I included a button to toggle stretch/centering of the image using JavaScript to edit the CSS. I also included a cookie to save a users last search to make the background theme persistent.
+I used [SimpleWeather.js](http://simpleweatherjs.com/) to retrieve local weather based on the users location (this will not work if geolocation is disabled in the users browser).
+I used [MouseTrap.js](https://craig.is/killing/mice) to bind various keyboard shortcuts to websites I visit often.
